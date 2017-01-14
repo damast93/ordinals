@@ -1,7 +1,7 @@
-module Ordinals(Ordinal(), w) where
+module Ordinals(Ordinal(), w, (^)) where
 
 import Data.List
-import Prelude hiding (exponent)
+import Prelude hiding (exponent,(^))
 
 -- Implementation for ordinals in [0,epsilon0)
 -- in Cantor Normal Form (CNF)
@@ -61,7 +61,11 @@ cnf_multByTerm (CNFPowerSum (d:ds)) (Term b n) =
 
 cnf_mult :: Ordinal -> Ordinal -> Ordinal
 cnf_mult alpha (CNFPowerSum ts) = sum [ cnf_multByTerm alpha t | t <- ts ]
-    
+
+-- Ordinal exponentation
+(^) :: Ordinal -> Ordinal -> Ordinal
+(^) = (*)
+
 -- Instances    
 instance Num Ordinal where 
     a + b = cnf_sum a b
