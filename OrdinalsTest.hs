@@ -218,7 +218,7 @@ instance Arbitrary Ordinal where
     arbitrary = eval <$> arbitrary
 
 -- Test cases for finite ordinals
-data Finite = Finite Ordinal Integer
+data Finite = Finite Ordinal Integer deriving Show
 
 instance Arbitrary Finite where
     arbitrary = do

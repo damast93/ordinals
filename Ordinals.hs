@@ -64,7 +64,7 @@ cnf_mult alpha (CNFPowerSum ts) = sum [ cnf_multByTerm alpha t | t <- ts ]
 
 -- Ordinal exponentation
 (^) :: Ordinal -> Ordinal -> Ordinal
-(^) = (*)
+(^) = undefined -- TODO define exponentation
 
 -- Instances    
 instance Num Ordinal where 
@@ -78,12 +78,22 @@ instance Num Ordinal where
 
 instance Ord Ordinal where
     compare = cnf_compare
-          
+
+-- Pretty printing
+
+show_term :: Term -> String
+show_term (Term (CNFPowerSum[]) n) = show n
+show_term (Term (CNFPowerSum [Term (CNFPowerSum[]) n]) 1) = "w^" ++ show n
+show_term (Term (CNFPowerSum [Term (CNFPowerSum[]) n]) k) = "w^" ++ show n ++ "*" ++ show k
+show_term (Term a 1) = "w^(" ++ show_cnf a ++ ")"
+show_term (Term a n) = "w^(" ++ show_cnf a ++ ")*" ++ show n
+
+show_cnf :: Ordinal -> String
+show_cnf (CNFPowerSum[]) = "0"
+show_cnf (CNFPowerSum terms) = 
+    intercalate " + " [
+        show_term t | t <- terms
+      ]
+
 instance Show Ordinal where
-    show (CNFPowerSum []) = "0"
-    show (CNFPowerSum [Term (CNFPowerSum[]) n]) = show n
-    show (CNFPowerSum terms) = 
-        intercalate " + " [
-            "w^(" ++ show b ++ ")*" ++ show c | (Term b c) <- terms
-          ]
-    
+    show = show_cnf
