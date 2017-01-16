@@ -1,0 +1,98 @@
+\documentclass[12pt,a4paper,]{article}
+
+% Random Verbesserungen und Sprache
+\usepackage{fixltx2e}
+
+\usepackage[ngerman]{babel}
+\usepackage[babel, german=guillemets]{csquotes}
+
+% Typografie
+\usepackage[T1]{fontenc}
+\usepackage{xcolor}
+\usepackage{titlesec}
+
+\usepackage{pdfpages}
+
+\usepackage[condensed,math]{anttor}
+\usepackage{libertine}
+\setmainfont[Ligatures=TeX]{Linux Libertine O}
+
+\usepackage{fontspec}
+
+\usepackage{etoolbox}
+\newfontfamily\quotefont{Antykwa Torunska Condensed}
+\AtBeginEnvironment{quote}{\quotefont}
+
+\usepackage{microtype}
+
+% Symbole
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+
+% Kommutative Diagramme
+\usepackage[all,cmtip]{xy}
+
+% Bibliografie
+\usepackage{doc}
+\usepackage[style=alphabetic]{biblatex} 
+\renewcommand*{\intitlepunct}{}
+\DefineBibliographyStrings{german}{in={}}
+
+% Layout-Setup
+\usepackage[left=3cm,right=3cm,top=1.5cm,bottom=1.2cm,includeheadfoot]{geometry}
+
+% Grafiken erstellen und Einbinden
+\usepackage{tikz}
+\usepackage{graphicx}
+
+% Beweis-Umgebungen
+\usepackage[standard,amsmath,thmmarks]{ntheorem}
+
+% Fortlaufende per-Section-Nummerierung (mit dummy-Counter)
+\theoremstyle{margin}
+\theorembodyfont{\normalfont}
+\newtheorem{Schritt}{Schritt}
+\newtheorem{counter}{counter}[section]
+
+\renewtheorem{Beispiel}[counter]{Beispiel}
+\renewtheorem{Definition}[counter]{Definition}
+\renewtheorem{Bemerkung}[counter]{Bemerkung}
+\renewtheorem{Proposition}[counter]{Frage}
+
+\theorembodyfont{\slshape}
+\renewtheorem{Korollar}[counter]{Korollar}
+\renewtheorem{Lemma}[counter]{Lemma}
+\renewtheorem{Satz}[counter]{Satz}
+
+\theoremstyle{nonumberplain}
+\theoremsymbol{\ensuremath{\,\hfill\square}}
+\theoremheaderfont{\normalfont\scshape}
+\theorembodyfont{\normalfont}
+\theoremseparator{:} 
+\renewtheorem{Beweis}{Beweis}
+
+% Mathe-Abkürzungen, Symboldefinitionen
+\newcommand{\id}{\textrm{id}}
+\newcommand{\Id}{\textrm{Id}}
+\renewcommand{\hom}{\textrm{Hom}}
+\newcommand{\op}{\textrm{op}}
+\newcommand{\im}{\textrm{im}}
+\newcommand{\tensor}{\otimes}
+\newcommand{\coker}{\textrm{coker}}
+\newcommand{\cat}{\textbf}
+\newcommand{\iso}{\cong}
+\newcommand{\hask}[1]{\texttt{#1}}
+\newcommand{\nitem}[1]{\item\textbf{#1}}
+\newcommand{\diag}[1]{$$\xymatrix{#1}$$}
+\renewcommand{\bf}{\mathbf}
+
+
+% Hyperlinks
+\providecommand\phantomsection{} % Braucht man, damit hyperref mit section* klarkommt
+\usepackage[colorlinks=true, linkcolor=blue, citecolor=blue]{hyperref}
+\hypersetup{
+    hypertexnames=false,
+    pdfauthor={Dario Stein},
+}
+

@@ -1,0 +1,322 @@
+\input{template.tex}
+
+\title{Reminder on ordinal arithmetic}
+
+\newcommand{\cf}{\mathrm{cf}}
+
+\begin{document}
+
+\maketitle
+
+\part{Definitions}
+\section{Well-orders}
+Ordinals are the mother of all well-orders. A total order is called a \emph{well-order} if one the following equivalent conditions applies
+\begin{itemize}
+	\item Any nonempty set of element has a least element
+	\item There is no infinite descending sequence of elements
+\end{itemize}
+Every subset of a well-ordered set is again well-ordered. Every element $a \in P$ that is not maximal has an immediate successor $a^+ = \min \{ b : b > a \}$. Every bounded subset of a well-order has a supremum. For every element $a \in P$, $a$ is either the minimal element, a \emph{successor element} ($a = b^+$) or a so-called \emph{limit element}. In this case, it is the supremum of the elements strictly below it. By the axiom of choice, every set can be well-ordered. \\
+
+\textbf{Proposition} [Trichotomy]
+If $P,Q$ are two well-orders, then we have the following trichotomy
+\begin{itemize}
+	\item $P$ is order-isomorphic to a proper initial segment of $Q$
+	\item $P$ is order-isomorphic to $Q$
+	\item A proper initial segment of $P$ is order-isomorphic to $Q$.
+\end{itemize}
+
+We call two well-orders \emph{of the same order-type} if they are order-isomorphic. The order-types are thus totally ordered by `is isomorphic to an initial segment of'. This will turn out to be a well-order.
+
+\section{Ordinals}
+Ordinal numbers are certain well-ordered sets, serving as distinguished representatives for order-types. For every well-ordered set $P$, there is a unique ordinal $\alpha$ such that $\alpha$ and $P$ are order-isomorphic. The proper class of ordinal numbers is well-ordered, and every well-ordered set is order-isomorphic to an initial segment of the ordinal numbers.
+
+We use the von Neumann-construction of ordinals, i.e. for every ordinal $\lambda$, we let
+
+\[ \lambda = \{ \alpha : \alpha < \lambda \} = [0,\lambda) \]
+
+as a set. We have for all ordinals $\alpha,\lambda$ that
+\[ \alpha < \lambda \Leftrightarrow \alpha \in \lambda \Leftrightarrow \alpha \subset \lambda \Leftrightarrow \alpha \text{ proper initial segment of } \lambda \]
+The ordinals are as sets defined recursively via
+
+\[ 
+\begin{cases}
+	0 = \emptyset \\
+	\alpha^+ = \alpha \cup \{\alpha\} \\
+	\lambda = \bigcup_{\alpha < \lambda} \alpha
+\end{cases}
+\]
+
+For example we have $2 = \{0,1\} = \{0,\{0\}\} = \{\emptyset, \{\emptyset\}\}$ and we get the first transfinite ordinal $\omega$ via
+\[ \omega := \bigcup_{n \text{ finite }} n = \{0,1,2,\ldots\} = \mathbb N \]
+and its successor
+\[ \omega^+ := \mathbb N \cup \{ \mathbb N \} = \{0,1,2,\ldots\, \mathbb N \}. \]
+
+Every \emph{set} $\Gamma$ of ordinals has a supremum in the ordinals, and we use the following three notations interchangably.
+
+\[ \sup \Gamma = \lim_{\gamma \in \Gamma} \gamma := \bigcup_{\gamma \in \Gamma} \gamma \]
+
+\section{Cardinals}
+We model cardinals as special ordinals, namely we identify every cardinal $\mathfrak a$ with the least ordinal $\alpha$ that is in bijection with $\mathfrak a$. Note that now the cardinal $\alpha$ is itself the canonical representative of a set of cardinality $\alpha$, as
+\[ |\alpha| = |\{ \beta : \beta < \alpha \}| = \alpha. \]
+
+Note that $\omega$ is the first infinite ordinal and thus a cardinal
+\[ \omega =: \aleph_0 \]
+
+Cardinals are again well-ordered, leading to their own notion of cardinal sucessors. We can thus enumerate the infinite cardinals by ordinals
+\[ 
+\begin{cases}
+	\aleph_0 = \omega \\
+	\aleph_{\alpha^+} = (\aleph_\alpha)^+ \\
+	\aleph_\lambda = \bigcup_{\alpha < \lambda} \aleph_\alpha
+\end{cases}
+\]
+
+We let $\omega_{\alpha} = \aleph_{\alpha}$, so e.g. $\omega_1$ is the first uncountable ordinal. \\
+
+\textbf{Nonexample:} Let's appreciate some of the non-intuitiveness of $\omega_1$. It is an uncountable well-ordered set, but every initial segment is countable. Unlike $\omega = \sup \{0,1,2,\ldots\}$, $\omega_1$ is not the supremum of any countable subset. Let $\omega_1 = \sup \Gamma, \Gamma \subseteq \omega_1$ countable, then
+\[ \omega_1 = \bigcup \Gamma, \] thus $\omega_1$ is countable union of countable sets, hence countable; contradiction. 
+
+\section{Cofinality}
+The phenomenon from above is captured by the notion of cofinality. A subset $N \subseteq P$ of an ordered set is called \emph{cofinal} if 
+\[ \forall p \in P \exists n \in N : p \leq n. \]
+The cofinality $\cf(P)$ is the least cardinality of a cofinal subset of $P$. We have $\cf(P) = 1$ iff $P$ has a maximial element, otherwise at least $\cf(P) \geq \omega$. \\
+
+For an ordinal $\alpha$, $\cf(\alpha)$ is the least cardinality of a subset $\Gamma \subseteq \alpha$ with $\alpha = \sup \Gamma$. We have shown that $\cf(\omega_1) = \omega_1$. \\
+
+A cardinal $\lambda$ is called \emph{regular} iff $\cf(\lambda) = \lambda$. \\
+
+\textbf{Proposition: } For every successor cardinal $\alpha$, $\aleph_\alpha$ is regular. For every limit ordinal $\lambda$, we have $\cf(\aleph_\lambda) = \cf(\lambda)$ instead. \\
+
+\textbf{Example: } $\aleph_\omega$ is not regular, as 
+\[ \cf(\aleph_\omega) = \cf(\omega) = \omega. \] 
+In fact, by definition $\aleph_\omega = \sup \{ \aleph_0, \aleph_1, \ldots \}$ is supremum of a countable subset. 
+
+\section{Topology}
+On every totally ordered set, there is an induced topology called the \emph{order topology} given by the basis of open rays and open intervals. For example, the order topology on $\mathbb R$ with the usual order is just the euclidean one.
+
+Every ordinal $\alpha$ becomes a topological space of its own in the order topology. For example the ordinal $\omega$ is homeomorphic to the subspace $\mathbb N \subset \mathbb R$, whereas $\omega^+$ is homeomorphic to
+\[ \{ 1 - 1/n : n = 1,2, \ldots\} \cup \{ 1 \}. \]
+At some point, larger ordinals will not be metric spaces any more. \\
+
+
+\pagebreak 
+
+\part{Ordinal arithmetic}
+\section{Addition}
+Ordinal arithmetic is defined recursively with recursion on the right operand. This leads to a certain asymmetry and enforces certain rules only on the right side.
+
+\[ 
+\begin{cases}
+	\alpha + 0 = \alpha \\
+	\alpha + (\beta^+) = (\alpha + \beta)^+ \\
+	\alpha + \lambda = \bigcup_{\beta < \lambda} \alpha + \beta
+\end{cases}
+\]
+
+\textbf{Proposition: } Addition is strictly monotonic and continuous in the right argument. Addition is associative
+
+\textbf{Non-examples: } Addition is merely non-decreasing in the left argument and not continuous. Addition is not commutative.
+
+We have 
+\[ 2 + \omega = \bigcup_{n < \omega} 2 + n = \sup \{ 2, 3, 4, \ldots \} = \omega. \]
+From there, we get $0 + \omega = \omega = 2 + \omega$ and $\omega + 2 \neq 2 + \omega$. Regarding continuity
+\[ \omega + 2 = \sup \{0,1,2,\ldots\} + 2 \neq \sup \{0 + 2, 1 + 2, \ldots\} = \omega. \]
+
+\textbf{Proposition} Let $P,Q$ be two well-orders with order types $\alpha,\beta$. Then $\alpha+\beta$ is the order type of the well-order on $P \sqcup Q$ where every element of $P$ comes before every element of $Q$. E.g.
+
+\[ \omega + \omega + 1 \cong \{ 0 < 1 < 2 < \ldots 0' < 1' < 2' < \ldots 0'' \} \]
+
+\section{Ordinal multiplication}
+We define multiplication by continuity and distributivity on the right.
+
+\[ 
+\begin{cases}
+	\alpha \cdot 0 = 0 \\
+	\alpha \cdot (\beta + 1) = (\alpha \cdot \beta) + \alpha \\
+	\alpha \cdot \lambda = \bigcup_{\beta < \lambda} \alpha \cdot \beta
+\end{cases}
+\]
+
+\textbf{Proposition: } Multiplication is strictly monotonic and continuous on the right and associative. $1$ is both-sided identity.
+
+\textbf{Non-examples: } Multiplication is merely non-decreasing in the left argument and not continuous. Multiplication is not commutative and not distributive in the left argument. \\
+
+We have $\omega \cdot 2 = \omega + \omega$, whereas
+
+\[ 2 \cdot \omega = \bigcup_{n<\omega} 2\cdot n = \sup \{ 0, 2, 4, \ldots \} = \omega. \]
+
+Therefore we get $\omega \cdot 2 \neq 2 \cdot \omega$ and $1\cdot \omega = 2\cdot \omega \neq (1+1)\times \omega$. Regarding continuity, 
+\[ \omega \cdot \omega = \sup \{ 1, 2, 3, \ldots \} \cdot \omega \neq \sup \{ 1 \cdot \omega, 2 \cdot \omega, 3 \cdot \omega, \ldots \} = \sup \{ \omega, \omega, \omega, \ldots \}. \]
+
+\textbf{Proposition: } Let $P,Q$ be two well-orders with order types $\alpha,\beta$. Then $\alpha \cdot \beta$ is the order type of $P \times Q$ regarded as $Q$ copies of $P$ (reverse lexical order), i.e.
+
+\[ \omega\cdot 2 \cong \{ 0 < 1 < 2 < \ldots 0' < 1' < 2' < \ldots \} \cong \omega + \omega \]
+
+whereas
+
+\[ 2 \cdot \omega \cong \{ 0 < 1 < 0' < 1' < 0'' < 1'' < \ldots \} \cong \omega \]
+
+\section{Ordinal exponentiation}
+Ordinal exponentation is defined recursively with continuity and the power-law $\alpha^{\beta + \gamma} = \alpha^\beta \cdot \alpha^\gamma$ in mind.
+
+\[ 
+\begin{cases}
+	\alpha^0 = 1 \\
+	\alpha^{\beta + 1} = \alpha^\beta \cdot \alpha \\
+	\alpha^\lambda = \bigcup_{\beta < \lambda} \alpha^\beta
+\end{cases}
+\]
+
+\textbf{Proposition} Exponentation is strictly monotonic and continuous in the exponent. It respects multiplication in the exponent, i.e. $\alpha^{\beta\gamma} = (\alpha^\beta)^\gamma$.
+
+\textbf{Non-examples: } Exponentiation is merely non-decreasing and not continuous in the base. It does not respect multiplication in the base.
+
+First of all, for all $1 < k < \omega$ we have
+\[ k^\omega = \sup \{ k^n : n < \omega \} = \omega \]
+Thus $2^\omega = 3^\omega$. Also 
+\[ \omega^2 \neq \sup \{ n^2 : n < \omega \} = \omega. \]
+Regarding multiplication in the base, using associativity, we get
+\[ (\omega \cdot 2)^2 = (\omega \cdot 2)(\omega \cdot 2) = \omega \cdot (2\omega) \cdot 2 = \omega \cdot \omega \cdot 2 = \omega^2 \cdot 2. \]
+
+But then $(\omega \cdot 2)^2 \neq \omega^2 \cdot 2^2 = \omega^2 \cdot 4$. 
+
+\textbf{Proposition}
+Let $P,Q$ be two well-orders with order types $\alpha, \beta$. Then $\alpha^\beta$ is the order type of the set of function with finite support $\alpha^{(\beta)}$ in reverse lexical order.
+
+\section{Fixed-points}
+Consider the power towers
+\[ \omega \uparrow\uparrow 1 = \omega, \omega \uparrow \uparrow (n + 1) = \omega^{\omega \uparrow \uparrow n}. \]
+We define their supremum as 
+\[ \epsilon_0 := \sup \{ \omega \uparrow \uparrow n : n < \omega \}. \]
+\textbf{Proposition: } $\epsilon_0$ satisfies the equation $\omega^{\epsilon_0} = \epsilon_0$.
+
+By continuity in the exponent, we get
+\[ \omega^{\epsilon_0} = \sup_{n < \omega} \left(\omega^{\omega \uparrow \uparrow n}\right) = \sup_{n < \omega} (\omega \uparrow \uparrow (n+1)) = \epsilon_0 \]
+and $\epsilon_0$ is the least fixed point of $\omega^\cdot$. \\ 
+
+\textbf{Proposition} $\epsilon < \omega_1$, i.e. $\epsilon_0$ is still countable.
+This is because for infinite ordinals of cardinality at most $\kappa$, all arithmetic operations still produce ordinals of size at most $\kappa$. Note that by our constructions, the resulting ordinals are in bijection with just sums, products and functions with finite support of their underlying sets. 
+Now
+\[ \epsilon_0 = \bigcup_{n < \omega} \omega \uparrow \uparrow n \]
+is countable union of countable sets, thus countable. \\
+
+Note that we can produce other fixed-points for the continuous arithmetical operations in the very same fasion
+
+\begin{align*}
+\omega^{\epsilon_0} &= \epsilon_0 \\
+\omega\cdot \omega^\omega &= \omega^\omega \\
+\omega + \omega^2 &= \omega^2 \\
+1 + \omega &= \omega.
+\end{align*}
+
+\section{Cantor normal form}
+The ordinals in the interval $[0,\epsilon_0)$ are closed under ordinal addition, multiplication and exponentation. Every number $\alpha$ in that interval can be expressed as a unique so-called \emph{Cantor normal form} (CNF). 
+\[ \alpha = \omega^{\beta_1}c_1 + \ldots + \omega^{\beta_n}c_n \]
+where $\alpha > \beta_1 > \ldots > \beta_n$ and $c_i \in \mathbb N$. 
+We can recursively transform the exponents $\beta_i$ in CNF and get a hereditary representation in base $\omega$ after finitely many steps. We see that $[0,\epsilon_0)$ is actually generated by the natural numbers and $\omega$ under the arithmetical operations.  Arithmetic in CNF has simple computational descriptions.
+
+\subsection{Order}
+CNFs can be compared lexicographically. Highest exponents first, then coefficients. 
+
+\subsection{Addition}
+We see that
+\[
+\omega^\beta c + \omega^{\beta'}c' = \begin{cases}
+	\omega^\beta c + \omega^{\beta'}c' & \text{ if } \beta > \beta' \\
+	\omega^\beta (c+c') & \text{ if } \beta = \beta' \\
+	\omega^{\beta'}c' & \text{ if } \beta < \beta'
+\end{cases}
+\]
+If exponents are decreasing, they are already in CNF. If exponents are the same, simplify. If exponents are increasing, the bigger term absorbs the smaller one.
+\textbf{Example}
+\[ \omega^2 + \omega^3 = \omega^2 + \omega^2\omega = \omega^2(1+\omega) = \omega^2\omega = \omega^3. \]
+Thus in order to add a term to a CNF, insert it at the correct position, simplify and drop all further terms.
+
+\subsection{Multiplication}
+Multiplication is distributive on the right. Thus we just need to understand how to multiply a CNF with a single term on the right. Let
+\[ \alpha = \omega^{\beta_1}c_1 + \ldots + \omega^{\beta_n}c_n \]
+then for $\beta > 0$
+\[ \alpha \cdot \omega^\beta = (\omega^{\beta_1}c_1 + \ldots + \omega^{\beta_n}c_n) \cdot \omega^\beta = \omega^{\beta_1 + \beta}. \]
+Through repeated summation, we get for $n \in \mathbb N \setminus \{0\}$
+\[ \alpha \cdot n = \omega^{\beta_1}c_1 n + \ldots + \omega^{\beta_n}c_n. \]
+So multiplication just acts on the highest term. \textbf{For example}
+\[ (\omega^3 + \omega^2)\cdot 3 = \omega^3 + \omega^2 + \omega^3 + \omega^2 + \omega^3 + \omega^2 = \omega^3\cdot 3 + \omega^2. \]
+In the limit case, we get
+\begin{align*}
+ (\omega^3 \cdot 2 + \omega^2)\omega &= \sup_{n < \omega} (\omega^3 \cdot 2 + \omega^2)n \\
+ &= \sup_{n < \omega} (\omega^3 \cdot 2n + \omega^2) \\
+ &= \omega^3 \omega = \omega^4.
+\end{align*}
+
+\subsection{Exponentiation}
+Exponentiation with base $\omega$ is easy. For any $\beta$ in CNF, $\omega^\beta$ is already in CNF. Exponentiation with arbitrary base is more complicated. Let
+
+\[ \alpha = \omega^{\beta_1}c_1 + \ldots + \omega^{\beta_n}c_n \]
+
+By the power laws
+\[
+ \alpha^{\beta + \gamma} = \alpha^\beta \cdot \alpha^\gamma, \quad \alpha^{\beta \gamma} = (\alpha^\beta)^\gamma, \]
+we only need to unterstand taking powers with a single term. We distinguish finite and transfinite terms. 
+
+\subsubsection{Finite exponents}
+For $0 < r < \omega$, we can compute $\alpha^r$ by repeated multiplication. \\
+
+\subsubsection{Transfinite exponents}
+For exponents $\omega^\beta$ with $\beta > 0$, first distinguish if $\alpha$ is finite. If it is, note that
+\[ \alpha^\omega = \omega, \]
+so if $\beta$ is finite, then
+\[ \alpha^{\omega^\beta} = \omega^{\omega^{\beta-1}}. \]
+If $\beta$ is transfinite, then $\beta = 1 + \beta$, so
+\[ \alpha^{\omega^\beta} = \alpha^{\omega^{1+\beta}} = \alpha^{\omega\omega^\beta} = \omega^{\omega^\beta}. \]
+If $\alpha$ is transfinite, we simply get 
+\[ \alpha^{\omega^\beta} = \omega^{\beta_1\omega^\beta}. \]
+
+\textbf{Example}
+\begin{align*}
+(\omega^2 \cdot 2)^\omega &= \sup_{n<\omega} (\omega^2 \cdot 2)^n \\
+&= \sup_{n < \omega} \omega^{2n}\cdot 2 \\
+&= \omega^\omega. 
+\end{align*}
+
+\section{Goodstein's sequence}
+Goodstein's theorem is a very surprising theorem in number theory. Fix a basis $b \geq 2$. Take any number $n$ and write it in base-$b$,
+\[ n = b^{k_1}c_1 + \ldots + b^{k_\ell} c_\ell. \]
+Now $n > k_1 > \ldots > k_\ell$, so we can write the exponents in base-$b$ again and obtain a hereditary base-$b$ representation. \textbf{Example}
+\[ 13 = 8 + 4 + 1 = 2^3 + 2^2 + 1 = 2^{2+1} + 2^2 + 1. \]
+
+Fix a number $n$. We define the \emph{Goodstein sequence} $g^n(2), g^n(3), \ldots$ recursively. Let $g^n(2) = n$. Now write $g^n(2)$ in hereditary base-$2$ and bump the base, i.e. replace all $2$s by $3$s. Subtract one. That gives us $g^n(3)$. Repeat that, so in general
+\[ g^n(b+1) = \text{ write $g^n(b)$ in base-$b$, replace $b\to b+1$, subtract $1$}. \]
+ \textbf{For example}
+\begin{align*}
+	g^4(2) &= 4 = 2^2 \\
+	g^4(3) &= 3^3 - 1 = 26 \\
+	       &= 3^2\cdot 2 + 3\cdot 2 + 2 \\
+	g^4(4) &= 4^2 \cdot 2 + 4 \cdot 2 + 1 \\
+	g^4(5) &= 5^2 \cdot 2 + 5 \cdot 2 \\
+	g^4(6) &= 6^2 \cdot 2 + 6 \cdot 2 - 1 \\
+	       &= 6^2 \cdot 2 + 6 + 5 \\
+	g^4(7) &= 7^2 \cdot 2 + 7 + 4
+\end{align*}
+The numerical values of this sequence are
+\[ 4, 26, 41, 60, 83, 109, \ldots \]
+\textbf{Theorem: }[Goodstein] For every integer $n$, the Goodstein sequence $g^n$ eventually becomes $0$. \\
+
+The thing is: This takes long, extreemly, ridiculously long. The Goodstein function $G : \mathbb N \to \mathbb N$
+\[ G(n) = \min \{ b : g^n(b) = 0 \} \]
+is one of the fastest-growing functions ocurring in mathematics. We have
+\[ G(3) = 7, \] that is $g^3$ terminates at base $7$. How long might $g^4$ need? We have
+\[ G(4) = 3\cdot 2^{402653211}-1. \]
+That is a number with roughly 121 million \emph{decimal digits}. The numbers of the sequence are of the same order of magnitude. Even though the numbers seem to get larger and larger, something forces them to become 0 at the end. They seem to lose some complexity throughout the operations. We can precisely pin down this complexity using ordinals and CNF. \\
+
+\textbf{Proof of Goodstein's theorem} We know how the number $g^n(b)$ can be written in hereditary base-$b$. Define a second sequence $w^n(b)$ of ordinals in CNF by taking that representation and replacing $b$ with $\omega$. For example
+
+\begin{align*}
+	w^4(2) &= \omega^\omega \\
+	w^4(3) &= \omega^2 \cdot 2 + \omega \cdot 2 + 2 \\
+	w^4(4) &= \omega^2 \cdot 2 + \omega \cdot 2 + 1 \\
+	w^4(5) &= \omega^2 \cdot 2 + \omega \cdot 2 \\
+	w^4(6) &= \omega^2 \cdot 2 + \omega + 5
+\end{align*}
+
+This sequence of ordinals is strictly decreasing, thus can only have finite length. So $g^n$ can only have finitely many elements before stabilizing at zero.
+\end{document}
