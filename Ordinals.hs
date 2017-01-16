@@ -53,7 +53,7 @@ cnf_sum (CNFPowerSum ds) (CNFPowerSum (t:ts)) =
               
 -- Ordinal multiplication
 cnf_multByTerm :: Ordinal -> Term -> Ordinal
-cnf_multByTerm (CNFPowerSum[]) t = zero
+cnf_multByTerm (CNFPowerSum[]) t = 0
 cnf_multByTerm (CNFPowerSum (d:ds)) (Term (CNFPowerSum[]) n) = 
     CNFPowerSum ((d { multiplicity = (multiplicity d) * n }):ds)
 cnf_multByTerm (CNFPowerSum (d:ds)) (Term b n) = 
@@ -63,8 +63,24 @@ cnf_mult :: Ordinal -> Ordinal -> Ordinal
 cnf_mult alpha (CNFPowerSum ts) = sum [ cnf_multByTerm alpha t | t <- ts ]
 
 -- Ordinal exponentation
+
+-- TODO implement directly
+finite_power :: Ordinal -> Integer -> Ordinal
+finite_power a n = product [ a | _ <- [1..n] ]
+
+cnf_expByW :: Ordinal -> Ordinal -> Ordinal
+cnf_expByW (CNFPowerSum []) b = 0
+cnf_expByW a 0 = a
+cnf_expByW (a@(CNFPowerSum ((Term b1 c1):bs))) b 
+    | a == 1 = 1
+    | a < w 1 = w (w b)
+    | otherwise = w (b1 * w b)
+    
+cnf_expByTerm :: Ordinal -> Term -> Ordinal
+cnf_expByTerm a (Term b c) = finite_power (cnf_expByW a b) c
+
 (^) :: Ordinal -> Ordinal -> Ordinal
-(^) = undefined -- TODO define exponentation
+a^(CNFPowerSum terms) = product [ cnf_expByTerm a t | t <- terms ]
 
 -- Instances    
 instance Num Ordinal where 
@@ -81,6 +97,7 @@ instance Ord Ordinal where
 
 -- Pretty printing
 
+-- TODO w^1 == w
 show_term :: Term -> String
 show_term (Term (CNFPowerSum[]) n) = show n
 show_term (Term (CNFPowerSum [Term (CNFPowerSum[]) n]) 1) = "w^" ++ show n

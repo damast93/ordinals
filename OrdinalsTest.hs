@@ -66,7 +66,10 @@ test_power_one :: Ordinal -> Bool
 test_power_one a = 1^a == 1
 
 test_power_zero :: Ordinal -> Bool
-test_power_zero a = (a > 0) `implies` (0^a == 1)
+test_power_zero a = (a > 0) `implies` (0^a == 0)
+
+test_squaring :: Ordinal -> Bool
+test_squaring a = a^2 == a*a
 
 test_exp_strictness :: Ordinal -> Ordinal -> Ordinal -> Bool
 test_exp_strictness a b c = 
@@ -122,6 +125,7 @@ test_cases = [
     , "a^1 = a" <?> test_exp_one
     , "1^a = 1" <?> test_power_one
     , "0^a = 0 (0<a)" <?> test_power_zero
+    , "Squaring" <?> test_squaring
     , "Monotonicity of exponentiation" <?> test_exp_strictness 
     , "w is transfinite" <?> test_wtransfinite
     
@@ -133,6 +137,7 @@ test_cases = [
     , "Example 6" <?> (((w 2)*5 + (w 3)*2) == (w 3)*2)
     , "Example 7" <?> ((2^(w 1)) == w 1)
     , "Example 8" <?> ((((w 1)*2)^(w 1)) == ((w 1)^(w 1))*2)
+    , "Example 9" <?> ((w 2 * 2)^(w 1) == (w (w 1)))
   ]
 
 finite_cases :: [TestCase]
@@ -169,7 +174,7 @@ main = do
     sequence_ [ putStr (s ++ ": ") >> check p | (TestCase s p) <- fail_cases ]
   where
     check p = quickCheckWith args p
-    args = stdArgs { maxSize = 50, maxSuccess = 500 }
+    args = stdArgs { maxSize = 30, maxSuccess = 200 }
 
 -- Generate Arbitrary instance for Ordinal arithmetic
 
