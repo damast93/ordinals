@@ -64,6 +64,7 @@ cnf_mult alpha (CNFPowerSum ts) = sum [ cnf_multByTerm alpha t | t <- ts ]
 
 -- Ordinal exponentation
 
+-- Helpers
 is_finite :: Ordinal -> Bool
 is_finite (CNFPowerSum[]) = True
 is_finite (CNFPowerSum [Term (CNFPowerSum[]) n]) = True
@@ -74,10 +75,32 @@ get_finite (CNFPowerSum[]) = 0
 get_finite (CNFPowerSum [Term (CNFPowerSum[]) n]) = n
 get_finite _ = error "No finite ordinal given"
 
--- TODO implement directly
-finite_power :: Ordinal -> Integer -> Ordinal
-finite_power a n = product [ a | _ <- [1..n] ]
+-- Finite powers via repeated squaring
+-- TODO there is a faster, more explicit solution
 
+dlog2 n p b 
+    | p >= n = (p,b)
+    | otherwise = dlog2 n (2*p) (b+1)
+
+base2 n = let (p,b) = dlog2 n 1 0 in base2rec n p 
+    where 
+        base2rec n 0 = []
+        base2rec n p 
+            | n < p = 0 : base2rec n (p `div` 2)
+            | otherwise = 1 : base2rec (n - p) (p `div` 2)
+
+powerRec :: a -> a -> (a -> a -> a) -> [Int] -> a
+powerRec acc p op [] = acc
+powerRec acc p op (0:bits) = powerRec acc (p `op` p) op bits
+powerRec acc p op (1:bits) = powerRec (acc `op` p) (p `op` p) op bits
+            
+finite_power :: Ordinal -> Integer -> Ordinal
+finite_power a 0 = 1
+finite_power a n = 
+    powerRec 1 a (*) (reverse $ base2 n)    
+
+-- Arbitrary powers
+    
 cnf_expByW :: Ordinal -> Ordinal -> Ordinal
 cnf_expByW (CNFPowerSum []) b = 0
 cnf_expByW a 0 = a

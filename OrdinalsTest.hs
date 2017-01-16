@@ -74,6 +74,9 @@ test_squaring a = a^2 == a*a
 test_exp_strictness :: Ordinal -> Ordinal -> Ordinal -> Bool
 test_exp_strictness a b c = 
     (a < b && c > 1) `implies` ((c ^ a < c ^ b) && (a ^ c <= b ^ c))
+    
+test_finite_powers :: Ordinal -> Finite -> Bool
+test_finite_powers a (Finite b n) = (a^b == (product [ a | _ <- [1..n]]))
 
 -- Tests that should fail 
 
@@ -119,6 +122,7 @@ test_cases = [
     , "Monotonicity of w" <?> test_w_monotonic
     , "Exponential law for w" <?> test_exponential_law
     , "w well-defined exponential" <?> test_w_is_exponentiation
+    , "Finite powers" <?> test_finite_powers
     , "Power law 1" <?> test_powerlaw_1
     , "Power law 2" <?> test_powerlaw_2
     , "a^0 = 1" <?> test_exp_zero
@@ -204,9 +208,9 @@ arbitraryArithmeticSized n =
           b <- arbitraryArithmeticSized (n `div` 2)
           return $ Sum a b
       mulcase n = do
-          a <- arbitraryArithmeticSized (n `div` 2)
-          b <- arbitraryArithmeticSized (n `div` 2)
-          return $ Mul a b
+          a <- arbitraryArithmeticSized (n - 1)
+          b <- natural
+          return $ Mul a (Nat b)
       wcase n = WTo <$> arbitraryArithmeticSized (n - 1)
 
 instance Arbitrary Arithmetic where
