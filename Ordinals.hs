@@ -64,6 +64,16 @@ cnf_mult alpha (CNFPowerSum ts) = sum [ cnf_multByTerm alpha t | t <- ts ]
 
 -- Ordinal exponentation
 
+is_finite :: Ordinal -> Bool
+is_finite (CNFPowerSum[]) = True
+is_finite (CNFPowerSum [Term (CNFPowerSum[]) n]) = True
+is_finite _ = False
+
+get_finite :: Ordinal -> Integer 
+get_finite (CNFPowerSum[]) = 0
+get_finite (CNFPowerSum [Term (CNFPowerSum[]) n]) = n
+get_finite _ = error "No finite ordinal given"
+
 -- TODO implement directly
 finite_power :: Ordinal -> Integer -> Ordinal
 finite_power a n = product [ a | _ <- [1..n] ]
@@ -73,7 +83,8 @@ cnf_expByW (CNFPowerSum []) b = 0
 cnf_expByW a 0 = a
 cnf_expByW (a@(CNFPowerSum ((Term b1 c1):bs))) b 
     | a == 1 = 1
-    | a < w 1 = w (w b)
+    | a < w 1 && is_finite b = w (w (fromInteger ((get_finite b) - 1)))
+    | a < w 1 && otherwise = w (w b)
     | otherwise = w (b1 * w b)
     
 cnf_expByTerm :: Ordinal -> Term -> Ordinal
@@ -97,10 +108,12 @@ instance Ord Ordinal where
 
 -- Pretty printing
 
--- TODO w^1 == w
 show_term :: Term -> String
 show_term (Term (CNFPowerSum[]) n) = show n
+show_term (Term (CNFPowerSum [Term (CNFPowerSum[]) 1]) 1) = "w"
+show_term (Term (CNFPowerSum [Term (CNFPowerSum [Term (CNFPowerSum[]) 1]) 1]) 1) = "w^w"
 show_term (Term (CNFPowerSum [Term (CNFPowerSum[]) n]) 1) = "w^" ++ show n
+show_term (Term (CNFPowerSum [Term (CNFPowerSum[]) 1]) k) = "w*" ++ show k
 show_term (Term (CNFPowerSum [Term (CNFPowerSum[]) n]) k) = "w^" ++ show n ++ "*" ++ show k
 show_term (Term a 1) = "w^(" ++ show_cnf a ++ ")"
 show_term (Term a n) = "w^(" ++ show_cnf a ++ ")*" ++ show n

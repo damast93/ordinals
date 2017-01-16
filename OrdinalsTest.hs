@@ -136,8 +136,8 @@ test_cases = [
     , "Example 5" <?> (((w 1 + 1)*2) == ((w 1)*2 + 1))
     , "Example 6" <?> (((w 2)*5 + (w 3)*2) == (w 3)*2)
     , "Example 7" <?> ((2^(w 1)) == w 1)
-    , "Example 8" <?> ((((w 1)*2)^(w 1)) == ((w 1)^(w 1))*2)
-    , "Example 9" <?> ((w 2 * 2)^(w 1) == (w (w 1)))
+    , "Example 8" <?> ((w 2 * 2)^(w 1) == (w (w 1)))
+    , "Example 9" <?> (2^(w 2) == (w (w 1)))
   ]
 
 finite_cases :: [TestCase]
@@ -174,7 +174,7 @@ main = do
     sequence_ [ putStr (s ++ ": ") >> check p | (TestCase s p) <- fail_cases ]
   where
     check p = quickCheckWith args p
-    args = stdArgs { maxSize = 30, maxSuccess = 200 }
+    args = stdArgs { maxSize = 20, maxSuccess = 200 }
 
 -- Generate Arbitrary instance for Ordinal arithmetic
 
@@ -194,7 +194,7 @@ arbitraryArithmeticSized n =
     frequency [
         (2,natcase),
         (4,sumcase n),
-        (2, mulcase n),
+        (2,mulcase n),
         (3,wcase n)
       ]
     where
