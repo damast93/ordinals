@@ -9,7 +9,7 @@ This is just my quick take at test-driven development in Haskell with the amazin
 
 The module `Ordinals` exports a single type `Ordinal` that implements `Num` for arithmetic, `Ord`, `Eq` and `Show`. We can thus work with finite ordinals just by
 
-    1 :: Ordinal, 2 :: Ordinal, fromInteger 42
+    1, 2, fromInteger 42 :: Ordinal
 
 Transfinite ordinals can be created through the exponential function `w :: Ordinal -> Ordinal` in base *omega*. So
 
@@ -45,3 +45,9 @@ At the end, just
     quickCheck test_mult_associative
 
 and `QuickCheck` will scrutinize the given property with a variety of automatically generated test cases of different complexities.
+
+
+
+# License
+
+To the extent possible under law, the author(s) have dedicated all copyright and related and neighboring rights to this software to the public domain worldwide. This software is distributed without any warranty. See <[https://creativecommons.org/publicdomain/zero/1.0/]>(https://creativecommons.org/publicdomain/zero/1.0/)
